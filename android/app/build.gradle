@@ -149,9 +149,9 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-image-crop-picker')
-    compile project(':react-native-image-picker')
-    compile project(':react-native-select-all-images')
+    implementation project(':react-native-image-crop-picker')
+    implementation project(':react-native-select-all-images')
+    //implementation 'com.github.renatoaloi:react-native-select-all-images:Tag'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

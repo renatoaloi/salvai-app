@@ -10,7 +10,7 @@
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-image-crop-picker": "^0.21.3",
-    "react-native-image-picker": "^0.27.1"
+    "react-native-select-all-images": "git+https://github.com/renatoaloi/react-native-select-all-images.git#master"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
