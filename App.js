@@ -1,23 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight, ProgressBarAndroid, TextInput, Image } from 'react-native';
-//import ImagePicker from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNReactNativeSelectAllImages from 'react-native-select-all-images';
-
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android:
-        'Double tap R on your keyboard to reload,\n' +
-        'Shake or press menu button for dev menu',
-});
 
 export default class App extends Component {
     constructor(props) {
@@ -91,61 +75,33 @@ export default class App extends Component {
         this.setState({ cancel: false });
     }
 
-    _onPress1 = () => {
+    _onPressImages = () => {
         ImagePicker.openPicker({
             multiple: true
         }).then(async (images) => {
             console.log(images);
+            const mappedImages = images.map(img => {
+                return {
+                    DATA: img.path,
+                    DISPLAY_NAME: img.path.substring(img.path.lastIndexOf('/') + 1)
+                };
+            });
+            console.log(mappedImages);
+            this.setState({
+                total: mappedImages.length,
+                imagens: mappedImages
+            });
         });
     }
 
-    _onPress = () => {
+    _onPressAllImages = () => {
 
         RNReactNativeSelectAllImages.getImages().then(imagens => {
             console.log(imagens);
             this.setState({ total: imagens.length, imagens });
         });
-
-
-
-        /* // More info on all the options is below in the API Reference... just some common use cases shown here
-        const options = {
-            title: 'Selecione Fotos',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        }; */
-
-        /**
-         * The first arg is the options object for customization (it can also be null or omitted for default options),
-         * The second arg is the callback which sends object: response (more info in the API Reference)
-         */
-        /* ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                //const source = { uri: response.uri };
-
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    avatarSource: source,
-                });
-
-                console.log('source', response.uri);
-            }
-        }); */
     }
-    
+
     render() {
         console.log(this.state);
         return (
@@ -166,10 +122,10 @@ export default class App extends Component {
                         <Text style={styles.cellView}>{this.state.processadas}</Text>
                     </View>
                 </View>
-                <TouchableHighlight style={styles.button} onPress={this._onPress1}>
+                <TouchableHighlight style={styles.button} onPress={this._onPressImages}>
                     <Text>Selecionar Imagens</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.button} onPress={this._onPress}>
+                <TouchableHighlight style={styles.button} onPress={this._onPressAllImages}>
                     <Text>Selecionar Todas Imagens</Text>
                 </TouchableHighlight>
                 <ProgressBarAndroid
